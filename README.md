@@ -5,6 +5,11 @@ Enables Firefox's built-in Tracking Protection features, and provides
 the ability to quickly and easily disable/enable and provide comments
 and screenshots on sites that don't work correctly.
 
+# Requirements
+
+  Node version 5+
+  Firefox 45+
+
 ## Install Firefox add-on tool jpm
   npm install jpm -g
 
