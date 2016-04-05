@@ -46,6 +46,8 @@ let button = ToggleButton({
 });
 
 let panel = panels.Panel({
+  width: 480,
+  height: 380,
   contentURL: data.url("panel.html"),
   contentScriptFile: data.url("panel.js"),
   onHide: () => {

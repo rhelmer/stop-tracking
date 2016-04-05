@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="style.css" rel="stylesheet">
+    <link href="panel.css" rel="stylesheet">
   </head>
   <body>
     <div class="panel-section panel-section-header">
@@ -14,12 +14,14 @@
       Tell us about it:
       <textarea id="report-content" rows="6" cols="30" disabled></textarea>
       <br>&nbsp;<br>
-      <button id="report" disabled>Report a problem</button>
-      <button id="toggle" disabled>Disable and report</button>
-      <br>
-      <input type="checkbox" id="screenshot" checked disabled>Include screenshots</input>
-      <br>
+      <input type="checkbox" id="screenshot" checked disabled/><label for="screenshot">Include screenshots</label>
       <span id="status"></span>
     </div>
+    <div class="panel-section panel-section-footer">
+      <button  id="report" class="panel-section-footer-button default" disabled>Report a problem</button>
+      <div class="panel-section-footer-separator"></div>
+      <button id="toggle" class="panel-section-footer-button" disabled>Disable and report</button>
+    </div>
+    <script src="panel.js" charset="utf-8"></script>
   </body>
 </html>
