@@ -18,6 +18,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 // Enable tracking protection globally when add-on is installed.
 Services.prefs.setBoolPref("privacy.trackingprotection.enabled", true);
+require("sdk/system/unload").when(function(reason) {
+  Services.prefs.setBoolPref("privacy.trackingprotection.enabled", false);
+});
 
 let trackingEnabledIcons = {
   "18": "./tracking-protection.svg",
