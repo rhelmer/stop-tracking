@@ -14,6 +14,8 @@ document.documentElement.appendChild(canvas);
 // hooks for add-ons to use yet.
 const {Cc, Ci, Cu} = require("chrome");
 Cu.import("resource://gre/modules/Services.jsm");
+const wm = Cc["@mozilla.org/appshell/window-mediator;1"]
+             .getService(Ci.nsIWindowMediator);
 
 // Enable tracking protection globally when add-on is enabled.
 Services.prefs.setBoolPref("privacy.trackingprotection.enabled", true);
@@ -47,16 +49,15 @@ function attachScreenshot(report) {
   browserMM.loadFrameScript(
     require("sdk/self").data.url("frame-scripts/screenshot.js"), false);
   browserMM.addMessageListener("screenshot-finished", function (payload) {
-    let report = payload.data;
-    panel.port.emit("report", report);
+    // TODO close modal
   });
   browserMM.sendAsyncMessage('fs/screenshot', report);
 }
 
 function infobar(message) {
-  let wm = Cc["@mozilla.org/appshell/window-mediator;1"]
-           .getService(Ci.nsIWindowMediator);
   let mainWindow = wm.getMostRecentWindow("navigator:browser");
+
+  // remove any active infobars for this tab
   try {
     mainWindow.gBrowser.getNotificationBox().removeCurrentNotification();
   } catch(e) {
@@ -87,12 +88,19 @@ function infobar(message) {
 
 function activateTrackingProtection() {
   let normalizedUrl = normalizeUrl(tabs.activeTab.url);
+  let mainWindow = wm.getMostRecentWindow("navigator:browser");
+
+  // TODO is there a more direct way to tell if there are tracking elements
+  //      on the current page?
+  let elem = mainWindow.document.getElementById("tracking-blocked");
+
   if (normalizedUrl.scheme != "https") {
     console.log("tracking protection only works for web URLs");
   } else if (Services.perms.testPermission(normalizedUrl, "trackingprotection")) {
     console.log("tracking protection already disabled for this URL");
+  } else if (mainWindow.getComputedStyle(elem,null).getPropertyValue("display") == "none") {
+    console.log("no tracking elements found on this page");
   } else {
-    // FIXME detect if there are any tracking elements blocked
     infobar(`Tracking Protection active for ${normalizedUrl.host}, how does this page look?`);
   }
 }
