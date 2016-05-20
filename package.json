@@ -12,5 +12,8 @@
   "dependencies": {
     "formidable": ">= 1.0.17"
   },
-  "license": "MPL"
+  "license": "MPL",
+  "permissions": {
+    "multiprocess": true
+  }
 }
