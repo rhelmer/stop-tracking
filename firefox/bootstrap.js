@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-"use strict";
+//"use strict";
 
 const { utils: Cu, interfaces: Ci, classes: Cc } = Components;
 Cu.import("resource://gre/modules/Services.jsm");
@@ -57,21 +57,21 @@ let windowListener = {
 
 function startup() {
   // disable existing ad blockers
-  AddonManager.getAddonsByTypes(["extension"], addons => {
-    for (addon of addons) {
+  AddonManager.getAddonsByTypes(["extension"], (addons => {
+    for (let addon of addons) {
       if (addon && addon.id in ADBLOCKERS) {
         // TODO should notify users that adblockers are disabled
         console.log(`disabling ad blocker ${addon.id}`);
         addon.userDisabled = true;
       }
     }
-  });
+  }));
 
   // enable built-in tracking protection
   Services.prefs.setBoolPref("privacy.trackingprotection.enabled", true);
 
   // attach listener to existing browser windows
-  let windows = wm.getEnumerator("navigator:browser");
+  let windows = Services.wm.getEnumerator("navigator:browser");
   while (windows.hasMoreElements()) {
     // TODO also attach to existing tabs?
     let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);

@@ -26,5 +26,18 @@ The infobar prompts users to report a problem (with optional screenshot).
 ## Install test collection server
   npm install
 
+## Install Firefox `jpm` add-ons tool globally
+  npm install -g jpm
+
+# Running
+
 ## Run test collection server (in background)
   npm start &
+
+## Start Nightly Firefox with fresh profile and add-on installed
+  jpm --addon-dir=firefox run -b <path_to_nightly>
+
+# Packaging
+
+## Produce a XPI file for uploading to addons.mozilla.org
+  jpm --addon-dir=firefox xpi
