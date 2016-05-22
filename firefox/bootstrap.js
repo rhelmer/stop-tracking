@@ -31,38 +31,45 @@ function showInfobar(gBrowser) {
   }
 }
 
-function attachInfobar(aWindow) {
-  let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow);
-  domWindow.addEventListener("load", function () {
-    domWindow.removeEventListener("load", this, false);
-    if (domWindow.gBrowser && domWindow.gBrowser.tabContainer) {
-      let gBrowser = domWindow.gBrowser;
-      gBrowser.tabContainer.addEventListener("load", function (evt) {
-        let doc = evt.target.ownerDocument;
-        let win = evt.target.ownerGlobal;
-        let elem = doc.getElementById("tracking-blocked");
-        if (win.getComputedStyle(elem).getPropertyValue("display") != "none") {
-          showInfobar(gBrowser);
-        }
-      }, true);
-    }
-  }, false);
-};
+function attachInfobar(domWindow) {
+  if (domWindow.gBrowser && domWindow.gBrowser.tabContainer) {
+    let gBrowser = domWindow.gBrowser;
+    gBrowser.tabContainer.addEventListener("load", function (evt) {
+      console.log("rhelmer debug1 gBrowser.tabContainer load")
+      let doc = evt.target.ownerDocument;
+      let win = evt.target.ownerGlobal;
+      let elem = doc.getElementById("tracking-blocked");
+      if (win.getComputedStyle(elem).getPropertyValue("display") != "none") {
+        showInfobar(gBrowser);
+      }
+    }, true);
+  }
+}
 
 let windowListener = {
   onOpenWindow: aWindow => {
-    attachInfobar(aWindow);
+    let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow);
+    domWindow.addEventListener("load", function () {
+      console.log("rhelmer debug1 domWindow load")
+      domWindow.removeEventListener("load", this, false);
+      attachInfobar(domWindow);
+    }, false);
   },
 };
 
 function startup() {
   // disable existing ad blockers
+  // FIXME use promise here
   AddonManager.getAddonsByTypes(["extension"], (addons => {
     for (let addon of addons) {
-      if (addon && addon.id in ADBLOCKERS) {
-        // TODO should notify users that adblockers are disabled
-        console.log(`disabling ad blocker ${addon.id}`);
-        addon.userDisabled = true;
+      if (addon) {
+        for (let blocked of ADBLOCKERS) {
+          if (addon.id == blocked) {
+            // TODO should notify users that adblockers are disabled
+            console.log(`disabling ad blocker ${addon.id}`);
+            addon.userDisabled = true;
+          }
+        }
       }
     }
   }));
@@ -73,7 +80,7 @@ function startup() {
   // attach listener to existing browser windows
   let windows = Services.wm.getEnumerator("navigator:browser");
   while (windows.hasMoreElements()) {
-    // TODO also attach to existing tabs?
+    // TODO does this also attach to existing tabs?
     let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
     attachInfobar(domWindow);
   }
@@ -86,15 +93,29 @@ function shutdown() {
   Services.prefs.setBoolPref("privacy.trackingprotection.enabled", false);
 
   // remove listener from existing windows
+  let windows = Services.wm.getEnumerator("navigator:browser");
   while (windows.hasMoreElements()) {
     let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
-    WindowListener.setupBrowserUI(domWindow);
+    // TODO remove listeners
   }
 
   // stop listening for new windows
   Services.wm.removeListener(windowListener);
 
-  // TODO re-enable disabled ad blockers
+  // FIXME only enable adblockers that we actually disabled
+  // FIXME use promise here
+  AddonManager.getAddonsByTypes(["extension"], (addons => {
+    for (let addon of addons) {
+      if (addon) {
+        for (let blocked of ADBLOCKERS) {
+          if (addon.id == blocked) {
+            console.log(`enabling ad blocker ${addon.id}`);
+            addon.userDisabled = false;
+          }
+        }
+      }
+    }
+  }));
 }
 function install() {}
 function uninstall() {}
