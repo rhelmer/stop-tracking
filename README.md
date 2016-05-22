@@ -7,16 +7,17 @@ and screenshots on sites that don't work correctly.
 
 Installing this add-on will:
 
- 1) disable any built-in adblockers
- 2) automatically enable tracking protection (via the pref)
- 3) show a low-priority infobar when tracking elements are detected.
+ 1. disable any built-in adblockers
+ 2. automatically enable tracking protection (via the pref)
+ 3. show a low-priority infobar when tracking elements are detected.
 
 The infobar prompts users to report a problem (with optional screenshot).
 
- TODO implement report page (overlay content)
- TODO remember sites which have already been reported or infobar dismissed
- TODO add report invocation button to control center location
- TODO either prompt for permission or notify about disabling existing adblockers
+TODO:
+ * implement report page (overlay content)
+ * remember sites which have already been reported or infobar dismissed
+ * add report invocation button to control center location
+ * either prompt for permission or notify about disabling existing adblockers
 
 # Requirements
 
