@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-//"use strict";
+"use strict";
 
 const { utils: Cu, interfaces: Ci, classes: Cc } = Components;
 Cu.import("resource://gre/modules/Services.jsm");
@@ -34,7 +34,7 @@ function showInfobar(gBrowser) {
 function attachInfobar(aWindow) {
   let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow);
   domWindow.addEventListener("load", function () {
-    domWindow.removeEventListener("load", arguments.callee, false);
+    domWindow.removeEventListener("load", this, false);
     if (domWindow.gBrowser && domWindow.gBrowser.tabContainer) {
       let gBrowser = domWindow.gBrowser;
       gBrowser.tabContainer.addEventListener("load", function (evt) {
