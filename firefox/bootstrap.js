@@ -10,17 +10,28 @@ Cu.import("resource://gre/modules/AddonManager.jsm");
 
 const ADBLOCKERS = ["uBlock0@raymondhill.net"];
 
+// remember dismissed sites for the current session
+let gDismissed = [];
+
 function showInfobar(gBrowser) {
   let notificationBox = gBrowser.getNotificationBox();
   let notification = notificationBox.getNotificationWithValue("stop-tracking-request");
-  // TODO clear any infoboxes for previous sites loaded in this tab
-  if (!notification) {
-    let message = `Tracking Protection active for ${gBrowser.currentURI.host}, how does this page look?`;
+  let host = gBrowser.currentURI.host;
+  let spec = gBrowser.currentURI.spec;
+  if (!notification && !gDismissed.includes(spec)) {
+    let message = `Tracking Protection active for ${host}, how does this page look?`;
     let buttons = [{
       label: "Report a problem",
       callback: function () {
         console.log("report problem with tracking protection");
+        gDismissed.push(spec);
         // TODO hook up report
+      }
+    },{
+      label: "Continue blocking",
+      callback: function () {
+        console.log("continue blocking tracking protection");
+        gDismissed.push(spec);
       }
     }];
     let notificationBar = notificationBox.appendNotification(

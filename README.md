@@ -15,7 +15,6 @@ The infobar prompts users to report a problem (with optional screenshot).
 
 TODO:
  * implement report page (overlay content)
- * remember sites which have already been reported or infobar dismissed
  * add report invocation button to control center location
  * either prompt for permission or notify about disabling existing adblockers
 
