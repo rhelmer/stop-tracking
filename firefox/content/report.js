@@ -51,9 +51,9 @@ function submitReport(comments, url, screenshot) {
 }
 
 document.getElementById("report").addEventListener("click", evt => {
-  // FIXME test
   let comments = document.getElementById("report-content").value;
   let url = window.opener.gBrowser.currentURI.spec;
+  // FIXME probably need to use frame script to get this
   let screenshot = "test123";
   submitReport(comments, url, screenshot);
 });
