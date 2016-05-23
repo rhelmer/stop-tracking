@@ -42,6 +42,8 @@ function submitReport(comments, url, screenshot) {
             status.textContent = "report sent, thanks!";
             let textarea = document.getElementById("report-content");
             textarea.value = "";
+            // TODO would be nicer to fade out perhaps
+            window.close();
           } else {
             status.textContent = "error submitting report, please try again.";
           }
