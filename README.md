@@ -21,8 +21,8 @@ TODO:
 
 # Requirements
 
-  Node version 5+
-  Firefox 45+
+ * Node version 5+
+ * Firefox 45+
 
 ## Install test collection server
   npm install
