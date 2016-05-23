@@ -25,7 +25,7 @@ function showInfobar(gBrowser) {
       callback: function () {
         console.log("report problem with tracking protection");
         gDismissed.push(spec);
-        // TODO hook up report
+        gBrowser.ownerGlobal.open("chrome://stop-tracking/content/report.html");
       }
     },{
       label: "Continue blocking",
