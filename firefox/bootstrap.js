@@ -68,19 +68,14 @@ let windowListener = {
 
 function startup() {
   // disable existing ad blockers
-  // FIXME use promise here
   AddonManager.getAddonsByTypes(["extension"], (addons => {
-    for (let addon of addons) {
-      if (addon) {
-        for (let blocked of ADBLOCKERS) {
-          if (addon.id == blocked) {
-            // TODO should notify users that adblockers are disabled
-            console.log(`disabling ad blocker ${addon.id}`);
-            addon.userDisabled = true;
-          }
-        }
+    addons.map(addon => {
+      if (ADBLOCKERS.includes(addon.id)) {
+        // TODO should notify users that adblockers are disabled
+        console.log(`disabling ad blocker ${addon.id}`);
+        addon.userDisabled = true;
       }
-    }
+    });
   }));
 
   // enable built-in tracking protection
@@ -112,18 +107,12 @@ function shutdown() {
   Services.wm.removeListener(windowListener);
 
   // FIXME only enable adblockers that we actually disabled
-  // FIXME use promise here
   AddonManager.getAddonsByTypes(["extension"], (addons => {
-    for (let addon of addons) {
-      if (addon) {
-        for (let blocked of ADBLOCKERS) {
-          if (addon.id == blocked) {
-            console.log(`enabling ad blocker ${addon.id}`);
-            addon.userDisabled = false;
-          }
-        }
-      }
-    }
+    addons.map(addon => {
+      if (ADBLOCKERS.includes(addon.id)) {
+        console.log(`enabling ad blocker ${addon.id}`);
+        addon.userDisabled = false;      }
+    });
   }));
 }
 function install() {}
