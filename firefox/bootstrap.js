@@ -27,7 +27,7 @@ function showInfobar(gBrowser) {
                             message, "stop-tracking-request", "",
                             notificationBox.PRIORITY_INFO_LOW,
                             buttons);
-    notificationBar.persistence = 1;
+    notificationBar.persistence = 0;
   }
 }
 
