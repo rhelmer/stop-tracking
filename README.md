@@ -14,7 +14,8 @@ Installing this add-on will:
 The infobar prompts users to report a problem (with optional screenshot).
 
 TODO:
- * implement report page (overlay content)
+ * report page should overlay content
+ * implement screenshot support
  * add report invocation button to control center location
  * either prompt for permission or notify about disabling existing adblockers
 

@@ -5,6 +5,7 @@ let productName = "TrackingProtection";
 // FIXME get this from the addon
 let version = "0.0.2";
 
+// FIXME could maybe use built-in form submitter if this is chrome anyway
 function submitReport(comments, url, screenshot) {
     let serverURL = reportsServer;
     let xhr = new XMLHttpRequest();
