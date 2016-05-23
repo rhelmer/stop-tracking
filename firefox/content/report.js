@@ -1,15 +1,15 @@
 "use strict";
 
-var reportsServer = "http://localhost:5000/upload";
-var productName = "TrackingProtection";
+let reportsServer = "http://localhost:5000/upload";
+let productName = "TrackingProtection";
 // FIXME get this from the addon
-var version = "0.0.2";
+let version = "0.0.2";
 
 function submitReport(comments, url, screenshot) {
-    var serverURL = reportsServer;
-    var xhr = new XMLHttpRequest();
+    let serverURL = reportsServer;
+    let xhr = new XMLHttpRequest();
 
-    var form = {
+    let form = {
         "ProductName": productName,
         "Version": version,
         "Comments": comments,
@@ -20,12 +20,12 @@ function submitReport(comments, url, screenshot) {
     }
 
     xhr.open("POST", serverURL, true);
-    var boundary=Math.random().toString().substr(2);
+    let boundary=Math.random().toString().substr(2);
     xhr.setRequestHeader("content-type",
         "multipart/form-data; charset=utf-8; boundary=" + boundary);
 
-    var multipart = "";
-    for (var key in form) {
+    let multipart = "";
+    for (let key in form) {
         multipart += "--" + boundary +
             "\r\nContent-Disposition: form-data; name=\"" + key + "\"" +
             "\r\nContent-type: text/plain" +
@@ -33,13 +33,13 @@ function submitReport(comments, url, screenshot) {
     }
     multipart += "--" + boundary + "--\r\n";
 
-    var status = document.getElementById("status");
-    xhr.onreadystatechange = function() {
+    let status = document.getElementById("status");
+    xhr.onreadystatechange = () => {
         if (xhr.readyState == 4) {
           if (xhr.status == 200) {
             console.log("report id:", xhr.responseText);
             status.textContent = "report sent, thanks!";
-            var textarea = document.getElementById("report-content");
+            let textarea = document.getElementById("report-content");
             textarea.value = "";
           } else {
             status.textContent = "error submitting report, please try again.";
