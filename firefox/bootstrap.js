@@ -35,7 +35,6 @@ function attachInfobar(domWindow) {
   if (domWindow.gBrowser && domWindow.gBrowser.tabContainer) {
     let gBrowser = domWindow.gBrowser;
     gBrowser.tabContainer.addEventListener("load", function (evt) {
-      console.log("rhelmer debug1 gBrowser.tabContainer load")
       let doc = evt.target.ownerDocument;
       let win = evt.target.ownerGlobal;
       let elem = doc.getElementById("tracking-blocked");
@@ -50,7 +49,6 @@ let windowListener = {
   onOpenWindow: aWindow => {
     let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindow);
     domWindow.addEventListener("load", function () {
-      console.log("rhelmer debug1 domWindow load")
       domWindow.removeEventListener("load", this, false);
       attachInfobar(domWindow);
     }, false);
