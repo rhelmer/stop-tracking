@@ -2,8 +2,8 @@
 Firefox Add-on providing Tracking Protection UI for advanced users.
 
 Enables Firefox's built-in Tracking Protection features, and provides
-the ability to quickly and easily disable/enable and provide comments
-and screenshots on sites that don't work correctly.
+the ability to quickly and easily provide comments and screenshots for pages
+that don't work correctly.
 
 Installing this add-on will:
 
