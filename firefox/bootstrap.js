@@ -8,6 +8,7 @@ const { utils: Cu, interfaces: Ci, classes: Cc } = Components;
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/AddonManager.jsm");
 
+// TODO add more known content-blocking extensions that may interfere with TP
 const ADBLOCKERS = ["uBlock0@raymondhill.net"];
 
 // remember dismissed sites for the current session
