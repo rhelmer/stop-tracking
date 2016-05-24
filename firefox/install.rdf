@@ -4,7 +4,7 @@
     <em:id>stop-tracking@test.mozilla.org</em:id>
     <em:name>Stop Tracking</em:name>
     <em:description>Enables built-in tracking protection and enables reporting for broken pages</em:description>
-    <em:version>0.0.2</em:version>
+    <em:version>0.0.5</em:version>
     <em:creator>Robert Helmer</em:creator>
 
     <em:bootstrap>true</em:bootstrap>
