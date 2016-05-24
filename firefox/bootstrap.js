@@ -65,15 +65,15 @@ function attachButton(domWindow) {
     let spec = gBrowser.currentURI.spec;
     console.log("attaching button to control center");
     let tp = doc.getElementById("tracking-protection-content");
-    let reportButton = doc.createElement("button");
-    reportButton.setAttribute("id", "tracking-action-report");
-    reportButton.setAttribute("label", "Report a problem");
-    reportButton.addEventListener("click", () => {
+    let reportLink = doc.createElement("label");
+    reportLink.appendChild(doc.createTextNode("Report a problem"));
+    reportLink.setAttribute("id", "tracking-action-report");
+    reportLink.addEventListener("click", () => {
       console.log("report problem with tracking protection (from cc)");
       gDismissed.push(spec);
       gBrowser.ownerGlobal.open("chrome://stop-tracking/content/report.html");
     });
-    tp.appendChild(reportButton);
+    tp.appendChild(reportLink);
   }
 }
 
